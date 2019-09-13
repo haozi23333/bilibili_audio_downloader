@@ -58,6 +58,7 @@ async function download_audio(url, file_name) {
    spinner.succeed(`🔍 搜索完成, 共找到 ${array.length} 条歌曲, 开始下载`)
    spinner.stop();
    await Promise.all(array.map(async (audio) => {
+      // 这里挑选最好的音质
       const data = audio.play_url_list.sort((a, b) => parseInt(a.quality) > parseInt(b.quality) ? 0 : 1).shift();
       await download_audio(data.url, `${audio.title}_${data.quality}.flac`)
    }))
